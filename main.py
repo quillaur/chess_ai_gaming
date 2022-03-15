@@ -75,6 +75,8 @@ if __name__ == '__main__':
 
 					white_turn = not white_turn
 
+					# Add timeout.
+
 				placeholder.empty()
 				svg_holder.empty()
 
