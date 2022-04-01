@@ -46,9 +46,6 @@ if __name__ == '__main__':
 				else:
 					move = black_agent.select_move(board, False)
 
-				# Le prochain tour, l'autre IA jouera
-				is_white_turn = not is_white_turn
-
 				# Jouer le coup
 				board.push(move)
 
@@ -76,6 +73,9 @@ if __name__ == '__main__':
 						else:
 							st.session_state["status"] = "It's a DRAW !"
 					break
+
+				# Le prochain tour, l'autre IA jouera
+				is_white_turn = not is_white_turn
 
 			turn_container.empty()
 			board_image.empty()
