@@ -26,7 +26,7 @@ def get_piece_value(piece: str):
 		value = 10
 	elif piece == "b":
 		value = 30
-	elif piece == "k":
+	elif piece == "n":
 		value = 30
 	elif piece == "r":
 		value = 50

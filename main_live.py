@@ -31,6 +31,13 @@ if __name__ == '__main__':
 			white_agent = importlib.import_module(f"agents.{white_name}")
 			black_agent = importlib.import_module(f"agents.{black_name}")
 
+			white_mlp = None
+			black_mlp = None
+			if "mlp" in white_name:
+				white_mlp = white_agent.create_mlp()
+			elif "mlp" in black_name:
+				black_mlp = black_agent.create_mlp()
+
 			board = chess.Board()
 
 			turn_container = st.empty()
@@ -42,10 +49,17 @@ if __name__ == '__main__':
 			while True:
 				# Selectionner le coup à jouer
 				if is_white_turn:
-					move = white_agent.select_move(board, True)
+					if white_mlp:
+						move = white_agent.select_move(board, True, white_mlp)
+					else:
+						move = white_agent.select_move(board, True)
 				else:
-					move = black_agent.select_move(board, False)
+					if black_mlp:
+						move = black_agent.select_move(board, False, black_mlp)
+					else:
+						move = black_agent.select_move(board, False)
 
+				print(move)
 				# Jouer le coup
 				board.push(move)
 
