@@ -7,14 +7,6 @@ import cairosvg
 
 
 if __name__ == '__main__':
-	# Récupérer les IA disponibles.
-	# agents = []
-	# for root, dirs, files in walk("agents"):
-	# 	for file in files:
-	# 		if file.endswith(".py"):
-	# 			ai_name = file.replace(".py", "")
-	# 			agents.append(ai_name)
-
 	agents = ["None"] + [file.replace(".py", "") for root, dirs, files in walk("agents") for file in files if file.endswith(".py")]
 	white_name = st.sidebar.selectbox("Select the white AI:", agents)
 	black_name = st.sidebar.selectbox("Select the black AI:", agents)

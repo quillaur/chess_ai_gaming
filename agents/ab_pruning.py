@@ -40,7 +40,7 @@ def piece_value(piece: str) -> int:
 
 
 
-def minimax(board: chess.Board, depth: int, is_maximizing: bool, is_white: bool) -> int:
+def ab_pruning(board: chess.Board, depth: int, is_maximizing: bool, is_white: bool, alpha: int, beta: int) -> int:
 	if(depth == 0):
 		return evaluate(board, is_white)
 	
@@ -50,16 +50,27 @@ def minimax(board: chess.Board, depth: int, is_maximizing: bool, is_white: bool)
 		max_score = -9999
 		for move in moves:
 			board.push(move)
-			max_score = max(max_score, minimax(board, depth-1, not is_maximizing, is_white))
+			max_score = max(max_score, ab_pruning(board, depth-1, not is_maximizing, is_white, alpha, beta))
 			board.pop()
+
+			alpha = max(alpha, max_score)
+
+			if alpha >= beta:
+				return max_score
 
 		return max_score
 	else:
 		min_score = 9999
 		for move in moves:
 			board.push(move)
-			min_score = min(min_score, minimax(board, depth-1, not is_maximizing, is_white))
+			min_score = min(min_score, ab_pruning(board, depth-1, not is_maximizing, is_white, alpha, beta))
 			board.pop()
+
+			beta = min(beta, min_score)
+
+			if alpha >= beta:
+				return min_score
+
 		return min_score
 
 
@@ -71,7 +82,7 @@ def select_move(board: chess.Board, is_white: bool) -> chess.Move:
 	best_move = random.choice(moves)
 	for move in moves:
 		board.push(move)
-		value = max(max_score, minimax(board, depth-1, not isMaximizing, is_white))
+		value = max(max_score, ab_pruning(board, depth-1, not isMaximizing, is_white, -10000, 10000))
 		board.pop()
 		
 		if value > max_score:
